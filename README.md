@@ -1,63 +1,21 @@
-# What?
+## TemplateDevEnv
+_For Kotlin see [TemplateDevEnvKt](https://github.com/CleanroomMC/TemplateDevEnvKt)_
 
-MCOpts is a getopt / getopt_long / cli / bash oriented minecraft command parameter management api.
+Template workspace for modding Minecraft 1.12.2. Licensed under MIT, it is made for public use.
 
-In short, this means your commands may look a little like this:
+This template runs on Java 21! Currently utilizies **Gradle 8.12** + **[RetroFuturaGradle](https://github.com/GTNewHorizons/RetroFuturaGradle) 1.4.1** + **Forge 14.23.5.2847**.
 
-    /#gen Tower -msr90 --gen natural_9i249u982 -d0 -x ~2
+With **coremod and mixin support** that is easy to configure.
 
-The library especially aims to eliminate redundant data (such as the same command usage in every single language file), and shorten common command argument processes. 
+### Instructions:
 
-This greatly reduces the susceptibility to errors and should save you time in the long run.
+1. Click `use this template` at the top.
+2. Clone the repository that you have created with this template to your local machine.
+3. Make sure IDEA is using Java 21 for Gradle before you sync the project. Verify this by going to IDEA's `Settings > Build, Execution, Deployment > Build Tools > Gradle > Gradle JVM`.
+4. Open the project folder in IDEA. When prompted, click "Load Gradle Project" as it detects the `build.gradle`, if you weren't prompted, right-click the project's `build.gradle` in IDEA, select `Link Gradle Project`, after completion, hit `Refresh All` in the gradle tab on the right.
+5. Run gradle tasks such as `runClient` and `runServer` in the IDEA gradle tab, or use the auto-imported run configurations like `1. Run Client`.
 
-# Getting Started
-
-To add MCOpts as a dependency to your mod, add this to your build.gradle:
-
-Up above
-
-    buildscript {
-
-        dependencies {
-            classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.0'
-        }
-    }
-
-    apply plugin: 'com.github.johnrengelman.shadow'
-
-Down below
-
-    dependencies {
-        deobfCompile 'ivorius.mcopts:MCOpts:0.9' // Change the version accordingly, obviously
-        // Find versions over at http://files.minecraftforge.net/maven/ivorius/mcopts/MCOpts/index.html
-    }
-
-    shadowJar {
-        exclude 'META-INF/*', 'META-INF/maven/**'
-        relocate 'ivorius.mcopts', project.group + '.shadow.mcopts'
-        classifier=''
-    }
-
-    reobf {
-        shadowJar { mappingType = 'SEARGE' }
-    }
-
-    tasks.build.dependsOn reobfShadowJar
-
-Now, re-setup your workspace:
-
-    gradle setupDecompWorkspace
-    
-If you use IDEA, remember to refresh your gradle project too. You will need at least Gradle 3.0, so set up your gradle home correctly.
-
-And that's it! MCOpts is now included in your jar.
-
-# Using MCOpts
-
-Please refer to [using MCOpts](https://github.com/Ivorforce/MCOpts/wiki/Using-MCOpts) and [adapting MCOpts](https://github.com/Ivorforce/MCOpts/wiki/Adapting-MCOpts).
-
-# License TL;DR
-
-You are free to include the library using the steps above, which will automatically add all required files (license, notices) to your jar. If you modify it, you also have to include a changes file to outline roughly what you did.
-
-[Full TL;DR](https://tldrlegal.com/license/apache-license-2.0-(apache-2.0))
+### Notes:
+- Dependencies script in [gradle/scripts/dependencies.gradle](gradle/scripts/dependencies.gradle), explanations are commented in the file.
+- Publishing script in [gradle/scripts/publishing.gradle](gradle/scripts/publishing.gradle).
+- When writing Mixins on IntelliJ, it is advisable to use latest [MinecraftDev Fork for RetroFuturaGradle](https://github.com/eigenraven/MinecraftDev/releases).
